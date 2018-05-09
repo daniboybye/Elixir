@@ -1,0 +1,144 @@
+Compiling 2 files (.ex)
+Generated test_case app
+Including tags: [:final_tests]
+Excluding tags: [:test]
+
+.
+
+  1) test TestSuite.run/2 can change the timeout to infinity (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:301
+     ** (ArithmeticError) bad argument in arithmetic expression
+     code: |> TestSuite.run(timeout: :infinity)
+     stacktrace:
+       (test_case) lib/test_suite.ex:81: anonymous fn/3 in TestSuite.runp/4
+       (elixir) lib/enum.ex:2924: Enum.flat_map_list/2
+       (test_case) lib/test_suite.ex:81: TestSuite.runp/4
+       test/final_test_stute_test.exs:303: (test)
+
+..........
+
+  2) test Inspect.TestSuite.inspect/2 properly displays singular form of test in a test suite with only one test (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:397
+     Assertion with =~ failed
+     code:  assert TestSuite.new(fn -> nil end) |> inspect() =~ ~r"#TestSuite<1 test:[PTFS.]>"
+     left:  "#TestSuite<1 tests:P>"
+     right: ~r/#TestSuite<1 test:[PTFS.]>/
+     stacktrace:
+       test/final_test_stute_test.exs:398: (test)
+
+.......
+
+  3) test TestSuite.run/2 treats test that rises and error as failed (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:271
+     ** (EXIT from #PID<0.287.0>) an exception was raised:
+         ** (RuntimeError) error
+             test/final_test_stute_test.exs:272: anonymous fn/0 in FinalTestSuiteTest."test TestSuite.run/2 treats test that rises and error as failed"/1
+             (elixir) lib/task/supervised.ex:88: Task.Supervised.do_apply/2
+             (elixir) lib/task/supervised.ex:38: Task.Supervised.reply/5
+             (stdlib) proc_lib.erl:247: :proc_lib.init_p_do_apply/3
+
+.......
+16:30:44.031 [error] Task #PID<0.289.0> started from #PID<0.288.0> terminating
+** (RuntimeError) error
+    test/final_test_stute_test.exs:272: anonymous fn/0 in FinalTestSuiteTest."test TestSuite.run/2 treats test that rises and error as failed"/1
+    (elixir) lib/task/supervised.ex:88: Task.Supervised.do_apply/2
+    (elixir) lib/task/supervised.ex:38: Task.Supervised.reply/5
+    (stdlib) proc_lib.erl:247: :proc_lib.init_p_do_apply/3
+Function: #Function<47.67744837/0 in FinalTestSuiteTest."test TestSuite.run/2 treats test that rises and error as failed"/1>
+    Args: []
+
+
+  4) test TestSuite.new/1 can not create test suite when the list given contains something different then 0 arity functions (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:33
+     Expected to catch error, got nothing
+     code: catch_error(TestSuite.new([nil]))
+     stacktrace:
+       test/final_test_stute_test.exs:35: (test)
+
+.......
+
+  5) test TestSuite.add/3 can not use anything but atoms as tags (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:99
+     Expected to catch error, got nothing
+     code: catch_error(%TestSuite{} |> TestSuite.add(test_case, "two"))
+     stacktrace:
+       test/final_test_stute_test.exs:103: (test)
+
+
+
+  6) test TestSuite.size/2 returns same as TestSuite.size/1 if give keyword list that does not contain :only or :exclude (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:180
+     ** (FunctionClauseError) no function clause matching in TestSuite.Test.tagp?/2
+
+     The following arguments were given to TestSuite.Test.tagp?/2:
+     
+         # 1
+         []
+     
+         # 2
+         [pesho: :ne]
+     
+     Attempted function clauses (showing 3 out of 3):
+     
+         defp tagp?(_, -[]-)
+         defp tagp?(tag, -[{:only, flag} | tail]-)
+         defp tagp?(tag, -[{:exclude, flag} | tail]-)
+     
+     code: assert TestSuite.size(test_suite) == TestSuite.size(test_suite, pesho: :ne)
+     stacktrace:
+       (test_case) lib/test.ex:17: TestSuite.Test.tagp?/2
+       (elixir) lib/enum.ex:2872: Enum.filter_list/2
+       (test_case) lib/test_suite.ex:51: TestSuite.size/2
+       test/final_test_stute_test.exs:183: (test)
+
+..........
+
+  7) test TestSuite.add/2 can not add list conatining anything but 0 arity functions (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:69
+     Expected to catch error, got nothing
+     code: catch_error(%TestSuite{} |> TestSuite.add([nil]))
+     stacktrace:
+       test/final_test_stute_test.exs:72: (test)
+
+...
+
+  8) test TestSuite.ran?/1 returns false if test suite is returned by a filter (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:369
+     Expected false or nil, got true
+     code: refute ran_test_suite |> TestSuite.passed() |> TestSuite.ran?()
+     stacktrace:
+       test/final_test_stute_test.exs:372: (test)
+
+..
+
+  9) test TestSuite.size/2 works properly when :exclude and :only are interleaved with other keywords (FinalTestSuiteTest)
+     test/final_test_stute_test.exs:245
+     ** (FunctionClauseError) no function clause matching in TestSuite.Test.tagp?/2
+
+     The following arguments were given to TestSuite.Test.tagp?/2:
+     
+         # 1
+         [:tag]
+     
+         # 2
+         [echo: :echo, exclude: :some_other_tag]
+     
+     Attempted function clauses (showing 3 out of 3):
+     
+         defp tagp?(_, -[]-)
+         defp tagp?(tag, -[{:only, flag} | tail]-)
+         defp tagp?(tag, -[{:exclude, flag} | tail]-)
+     
+     code: assert TestSuite.size(test_suite, only: :tag, echo: :echo, exclude: :some_other_tag) ==
+     stacktrace:
+       (test_case) lib/test.ex:17: TestSuite.Test.tagp?/2
+       (elixir) lib/enum.ex:2872: Enum.filter_list/2
+       (test_case) lib/test_suite.ex:51: TestSuite.size/2
+       test/final_test_stute_test.exs:254: (test)
+
+
+
+Finished in 5.4 seconds
+63 tests, 9 failures, 7 skipped
+
+Randomized with seed 13

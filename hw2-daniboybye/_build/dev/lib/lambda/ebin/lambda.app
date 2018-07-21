@@ -1,0 +1,12 @@
+{application,lambda,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"lambda"},
+              {modules,['Elixir.Lambda','Elixir.Lambda.Application',
+                        'Elixir.Lambda.Registry',
+                        'Elixir.Lambda.Registry.State',
+                        'Elixir.Lambda.Registry.State.Table',
+                        'Elixir.Lambda.Supervisor']},
+              {registered,[]},
+              {vsn,"0.1.0"},
+              {extra_applications,[logger]},
+              {mod,{'Elixir.Lambda.Application',[]}}]}.
